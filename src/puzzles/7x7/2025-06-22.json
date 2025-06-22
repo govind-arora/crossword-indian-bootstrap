@@ -18,28 +18,32 @@
         "clue": "Player who delivers the ball to batsman",
         "answer": "BOWLER",
         "row": 0,
-        "col": 0
+        "col": 0,
+        "length": 6
       },
       {
-        "number": 5,
+        "number": 2,
         "clue": "Maximum runs scored in one hit",
         "answer": "SIX",
         "row": 2,
-        "col": 2
+        "col": 2,
+        "length": 3
       },
       {
-        "number": 7,
+        "number": 3,
         "clue": "Three stumps and two bails",
         "answer": "WICKET",
         "row": 4,
-        "col": 0
+        "col": 0,
+        "length": 6
       },
       {
-        "number": 8,
+        "number": 4,
         "clue": "Fielder taking the ball to dismiss batsman",
         "answer": "CATCH",
         "row": 6,
-        "col": 0
+        "col": 0,
+        "length": 5
       }
     ],
     "down": [
@@ -48,14 +52,16 @@
         "clue": "Wooden blade used to hit the ball",
         "answer": "BAT",
         "row": 0,
-        "col": 0
+        "col": 0,
+        "length": 3
       },
       {
         "number": 2,
         "clue": "Quick single or multiple runs between wickets",
         "answer": "RUNS",
         "row": 0,
-        "col": 5
+        "col": 5,
+        "length": 4
       }
     ]
   }

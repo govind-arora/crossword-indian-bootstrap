@@ -18,21 +18,24 @@
         "clue": "Festival of lights",
         "answer": "DIWALI",
         "row": 0,
-        "col": 1
+        "col": 1,
+        "length": 6
       },
       {
         "number": 3,
         "clue": "Festival of colors",
         "answer": "HOLI",
         "row": 2,
-        "col": 0
+        "col": 0,
+        "length": 4
       },
       {
         "number": 5,
         "clue": "Islamic fasting month",
         "answer": "RAMADAN",
         "row": 4,
-        "col": 0
+        "col": 0,
+        "length": 7
       }
     ],
     "down": [
@@ -41,7 +44,8 @@
         "clue": "Lord with bow and arrow",
         "answer": "RAM",
         "row": 4,
-        "col": 0
+        "col": 0,
+        "length": 3
       }
     ]
   }

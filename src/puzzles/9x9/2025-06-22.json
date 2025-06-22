@@ -15,13 +15,31 @@
   ],
   "clues": {
     "across": [
-      { "number": 1, "clue": "Lights and crackers", "answer": "DIWALI", "row": 0, "col": 2 },
-      { "number": 3, "clue": "Color throwing festival", "answer": "HOLI", "row": 2, "col": 2 },
-      { "number": 5, "clue": "Muslims fast during", "answer": "RAMADAN", "row": 4, "col": 2 }
+      {
+        "number": 1,
+        "clue": "Lights and crackers",
+        "answer": "DIWALI",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "number": 3,
+        "clue": "Color throwing festival",
+        "answer": "HOLI",
+        "row": 2,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "number": 5,
+        "clue": "Muslims fast during",
+        "answer": "RAMADAN",
+        "row": 4,
+        "col": 2,
+        "length": 7
+      }
     ],
-    "down": [
-      { "number": 1, "clue": "Deepavali another name for?", "answer": "DIWALI", "row": 0, "col": 2 },
-      { "number": 2, "clue": "Powder play", "answer": "HOLI", "row": 2, "col": 2 }
-    ]
+    "down": []
   }
 }
