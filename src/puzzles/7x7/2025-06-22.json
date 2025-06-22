@@ -1,25 +1,62 @@
 {
   "date": "2025-06-22",
   "size": "7x7",
-  "theme": "Indian Festivals",
+  "theme": "Cricket",
   "grid": [
-    ["", "D", "I", "W", "A", "L", "I"],
+    ["B", "O", "W", "L", "E", "R", ""],
+    ["A", "", "", "", "", "U", ""],
+    ["T", "", "S", "I", "X", "N", ""],
+    ["", "", "", "", "", "S", ""],
+    ["W", "I", "C", "K", "E", "T", ""],
     ["", "", "", "", "", "", ""],
-    ["H", "O", "L", "I", "", "", ""],
-    ["", "", "", "", "", "", ""],
-    ["R", "A", "M", "A", "D", "A", "N"],
-    ["", "", "", "", "", "", ""],
-    ["", "", "", "", "", "", ""]
+    ["C", "A", "T", "C", "H", "", ""]
   ],
   "clues": {
     "across": [
-      { "number": 1, "clue": "Festival of lights", "answer": "DIWALI", "row": 0, "col": 1 },
-      { "number": 3, "clue": "Festival of colors", "answer": "HOLI", "row": 2, "col": 0 },
-      { "number": 5, "clue": "Islamic fasting month", "answer": "RAMADAN", "row": 4, "col": 0 }
+      {
+        "number": 1,
+        "clue": "Player who delivers the ball to batsman",
+        "answer": "BOWLER",
+        "row": 0,
+        "col": 0
+      },
+      {
+        "number": 5,
+        "clue": "Maximum runs scored in one hit",
+        "answer": "SIX",
+        "row": 2,
+        "col": 2
+      },
+      {
+        "number": 7,
+        "clue": "Three stumps and two bails",
+        "answer": "WICKET",
+        "row": 4,
+        "col": 0
+      },
+      {
+        "number": 8,
+        "clue": "Fielder taking the ball to dismiss batsman",
+        "answer": "CATCH",
+        "row": 6,
+        "col": 0
+      }
     ],
     "down": [
-      { "number": 1, "clue": "Celebrated in Kartika month", "answer": "DIWALI", "row": 0, "col": 1 },
-      { "number": 2, "clue": "Throwing colored powders", "answer": "HOLI", "row": 2, "col": 2 }
+      {
+        "number": 1,
+        "clue": "Wooden blade used to hit the ball",
+        "answer": "BAT",
+        "row": 0,
+        "col": 0
+      },
+      {
+        "number": 2,
+        "clue": "Quick single or multiple runs between wickets",
+        "answer": "RUNS",
+        "row": 0,
+        "col": 5
+      }
     ]
   }
 }
