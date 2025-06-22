@@ -37,19 +37,25 @@ export default function CrosswordGrid({ size, puzzle }) {
         </CardTitle>
         <div style={gridStyle}>
           {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => (
-              <Input
-                key={`${rowIndex}-${colIndex}`}
-                type="text"
-                maxLength={1}
-                value={cell}
-                onChange={(e) =>
-                  handleChange(rowIndex, colIndex, e.target.value)
-                }
-                style={cellStyle}
-                className="focus-ring"
-              />
-            ))
+            row.map((cell, colIndex) => {
+              const puzzleGrid = puzzle.grid;
+              const isBlackCell = puzzleGrid[rowIndex][colIndex] === "";
+
+              return (
+                <Input
+                  key={`${rowIndex}-${colIndex}`}
+                  type="text"
+                  maxLength={1}
+                  value={cell}
+                  onChange={(e) =>
+                    handleChange(rowIndex, colIndex, e.target.value)
+                  }
+                  style={cellStyle}
+                  className={isBlackCell ? "bg-dark text-white" : "bg-light"}
+                  disabled={isBlackCell}
+                />
+              );
+            })
           )}
         </div>
       </CardBody>

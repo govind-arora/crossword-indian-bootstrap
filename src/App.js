@@ -21,7 +21,7 @@ export default function App() {
       <Header date={today} />
       <SizeSelector size={size} setSize={setSize} />
 
-      {puzzle && (
+      {puzzle && puzzle.size === size && (
         <>
           <h4 className="mb-3 text-primary">Theme: {puzzle.theme}</h4>
           <div className="row">
