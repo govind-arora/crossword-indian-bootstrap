@@ -16,12 +16,12 @@ export default function CrosswordGrid({ size, puzzle }) {
 
   const gridStyle = {
     display: "grid",
-    gridTemplateColumns: `repeat(${parseInt(size)}, 2.5rem)`,
+    gridTemplateColumns: `repeat(${parseInt(size)}, 3rem)`,
     gap: "0.25rem",
   };
 
   const cellStyle = {
-    width: "2.5rem",
+    width: "3rem",
     height: "2.5rem",
     textAlign: "center",
     textTransform: "uppercase",
