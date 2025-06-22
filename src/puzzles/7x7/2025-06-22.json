@@ -1,0 +1,25 @@
+{
+  "date": "2025-06-22",
+  "size": "7x7",
+  "theme": "Indian Festivals",
+  "grid": [
+    ["", "D", "I", "W", "A", "L", "I"],
+    ["", "", "", "", "", "", ""],
+    ["H", "O", "L", "I", "", "", ""],
+    ["", "", "", "", "", "", ""],
+    ["R", "A", "M", "A", "D", "A", "N"],
+    ["", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", ""]
+  ],
+  "clues": {
+    "across": [
+      { "number": 1, "clue": "Festival of lights", "answer": "DIWALI", "row": 0, "col": 1 },
+      { "number": 3, "clue": "Festival of colors", "answer": "HOLI", "row": 2, "col": 0 },
+      { "number": 5, "clue": "Islamic fasting month", "answer": "RAMADAN", "row": 4, "col": 0 }
+    ],
+    "down": [
+      { "number": 1, "clue": "Celebrated in Kartika month", "answer": "DIWALI", "row": 0, "col": 1 },
+      { "number": 2, "clue": "Throwing colored powders", "answer": "HOLI", "row": 2, "col": 2 }
+    ]
+  }
+}

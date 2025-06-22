@@ -1,0 +1,23 @@
+{
+    "date": "2025-06-22",
+    "size": "5x5",
+    "theme": "Indian Festivals",
+    "grid": [
+      ["D", "I", "W", "A", "L"],
+      ["", "", "", "", "I"],
+      ["H", "O", "L", "I", ""],
+      ["", "", "", "", ""],
+      ["R", "A", "M", "A", "D"]
+    ],
+    "clues": {
+      "across": [
+        { "number": 1, "clue": "Festival of lights", "answer": "DIWALI", "row": 0, "col": 0 },
+        { "number": 3, "clue": "Festival of colors", "answer": "HOLI", "row": 2, "col": 0 },
+        { "number": 5, "clue": "Islamic month of fasting", "answer": "RAMADAN", "row": 4, "col": 0 }
+      ],
+      "down": [
+        { "number": 1, "clue": "Starts with crackers", "answer": "DIWALI", "row": 0, "col": 0 },
+        { "number": 2, "clue": "Color powder festival", "answer": "HOLI", "row": 2, "col": 2 }
+      ]
+    }
+  }
