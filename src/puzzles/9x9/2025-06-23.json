@@ -1,0 +1,45 @@
+{
+  "date": "2025-06-22",
+  "size": "9x9",
+  "theme": "Indian Festivals",
+  "grid": [
+    ["", "", "D", "I", "W", "A", "L", "I", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "H", "O", "L", "I", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "R", "A", "M", "A", "D", "A", "N"],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", ""]
+  ],
+  "clues": {
+    "across": [
+      {
+        "number": 1,
+        "clue": "Lights and crackers",
+        "answer": "DIWALI",
+        "row": 0,
+        "col": 2,
+        "length": 6
+      },
+      {
+        "number": 3,
+        "clue": "Color throwing festival",
+        "answer": "HOLI",
+        "row": 2,
+        "col": 2,
+        "length": 4
+      },
+      {
+        "number": 5,
+        "clue": "Muslims fast during",
+        "answer": "RAMADAN",
+        "row": 4,
+        "col": 2,
+        "length": 7
+      }
+    ],
+    "down": []
+  }
+}
