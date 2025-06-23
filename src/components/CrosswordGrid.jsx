@@ -1,14 +1,20 @@
 import { useState, useEffect } from "react";
 import { Card, CardBody, CardTitle, Input } from "reactstrap";
 
-export default function CrosswordGrid({ size, puzzle, onCellSelect }) {
+export default function CrosswordGrid({
+  size,
+  puzzle,
+  selectedCell,
+  setSelectedCell,
+  selectedClues,
+  setSelectedClues,
+}) {
   const [grid, setGrid] = useState(generateEmptyGrid(size));
-  const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
-  const [selectedClues, setSelectedClues] = useState([]);
+  const [highlightedClue, setHighlightedClue] = useState(null);
 
   useEffect(() => {
     setGrid(generateEmptyGrid(size));
-    setSelectedCell({ row: null, col: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   function handleChange(row, col, value) {
@@ -57,29 +63,16 @@ export default function CrosswordGrid({ size, puzzle, onCellSelect }) {
 
   function handleCellSelect(row, col) {
     setSelectedCell({ row, col });
-    const clues = findClueForCell(row, col);
-    setSelectedClues(clues);
-    if (onCellSelect) {
-      onCellSelect(clues);
-    }
-  }
 
-  function findClueForCell(row, col) {
-    const selectedClues = [];
+    const clues = [];
 
-    // Skip empty cells
-    if (puzzle.grid[row][col] === "") {
-      return selectedClues;
-    }
-
-    // Check if the cell is part of an across clue
     puzzle.clues.across.forEach((clue) => {
       const clueRow = clue.row;
       const clueCol = clue.col;
       const clueLength = clue.answer.length;
 
       if (row === clueRow && col >= clueCol && col < clueCol + clueLength) {
-        selectedClues.push({
+        clues.push({
           ...clue,
           direction: "across",
         });
@@ -93,14 +86,14 @@ export default function CrosswordGrid({ size, puzzle, onCellSelect }) {
       const clueLength = clue.answer.length;
 
       if (col === clueCol && row >= clueRow && row < clueRow + clueLength) {
-        selectedClues.push({
+        clues.push({
           ...clue,
           direction: "down",
         });
       }
     });
 
-    return selectedClues;
+    setSelectedClues(clues);
   }
 
   const gridStyle = {
@@ -123,12 +116,28 @@ export default function CrosswordGrid({ size, puzzle, onCellSelect }) {
 
     return selectedClues.some((clue) => {
       if (clue.direction === "across") {
+        // console.log(
+        //   clue.answer + ' ' +
+        //     `${
+        //       row === clue.row &&
+        //       col >= clue.col &&
+        //       col < clue.col + clue.answer.length
+        //     }`
+        // );
         return (
           row === clue.row &&
           col >= clue.col &&
           col < clue.col + clue.answer.length
         );
       } else if (clue.direction === "down") {
+        // console.log(
+        //   clue.answer + ' ' +
+        //     `${
+        //       col === clue.col &&
+        //       row >= clue.row &&
+        //       row < clue.row + clue.answer.length
+        //     }`
+        // );
         return (
           col === clue.col &&
           row >= clue.row &&

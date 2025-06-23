@@ -20,24 +20,21 @@
         "clue": "Lights and crackers",
         "answer": "DIWALI",
         "row": 0,
-        "col": 2,
-        "length": 6
+        "col": 2
       },
       {
         "number": 3,
         "clue": "Color throwing festival",
         "answer": "HOLI",
         "row": 2,
-        "col": 2,
-        "length": 4
+        "col": 2
       },
       {
         "number": 5,
         "clue": "Muslims fast during",
         "answer": "RAMADAN",
         "row": 4,
-        "col": 2,
-        "length": 7
+        "col": 2
       }
     ],
     "down": []

@@ -16,24 +16,21 @@
         "clue": "Festival of lights",
         "answer": "DIWAL",
         "row": 0,
-        "col": 0,
-        "length": 5
+        "col": 0
       },
       {
         "number": 3,
         "clue": "Festival of colors",
         "answer": "HOLI",
         "row": 2,
-        "col": 0,
-        "length": 4
+        "col": 0
       },
       {
         "number": 5,
         "clue": "Islamic month of fasting",
         "answer": "RAMAD",
         "row": 4,
-        "col": 0,
-        "length": 5
+        "col": 0
       }
     ],
     "down": []

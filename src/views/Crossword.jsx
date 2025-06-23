@@ -12,7 +12,7 @@ export default function Crossword({ today }) {
 
   useEffect(() => {
     if (!size) return;
-
+    setPuzzle(null); // Reset puzzle when size changes
     loadPuzzle(size, today).then(setPuzzle);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
