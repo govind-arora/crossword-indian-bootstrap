@@ -16,7 +16,7 @@ export default function CluesList({ clues, selectedClues }) {
         selectedClues.some(sc => (sc.number === clue.number && !sc.direction) || sc.direction === 'down'));
 
   return (
-    <div className="p-4 bg-light rounded shadow-sm w-100">
+    <div className="p-4">
       <h2 className="fw-semibold mb-2">Clues</h2>
       
       {acrossClues.length > 0 && (
