@@ -27,16 +27,30 @@ export default function CrosswordGrid({
       // If we have multiple clues for this cell and user is entering letters,
       // we want to maintain direction of movement consistent with the current highlighted clue
       const currentDirection = highlightedClue.direction;
-      
+
       // Find the other clue if any
-      const otherClue = selectedClues.find(clue => clue.direction !== currentDirection);
-      
+      const otherClue = selectedClues.find(
+        (clue) => clue.direction !== currentDirection
+      );
+
       // If we filled all cells in the current direction's clue, switch to the other clue if available
       if (otherClue) {
-        const filledCells = currentDirection === "across" 
-          ? grid[row].slice(highlightedClue.col, highlightedClue.col + highlightedClue.answer.length).filter(cell => cell !== "").length
-          : grid.map(r => r[col]).slice(highlightedClue.row, highlightedClue.row + highlightedClue.answer.length).filter(cell => cell !== "").length;
-        
+        const filledCells =
+          currentDirection === "across"
+            ? grid[row]
+                .slice(
+                  highlightedClue.col,
+                  highlightedClue.col + highlightedClue.answer.length
+                )
+                .filter((cell) => cell !== "").length
+            : grid
+                .map((r) => r[col])
+                .slice(
+                  highlightedClue.row,
+                  highlightedClue.row + highlightedClue.answer.length
+                )
+                .filter((cell) => cell !== "").length;
+
         if (filledCells >= highlightedClue.answer.length - 1) {
           setHighlightedClue(otherClue);
         }
@@ -60,8 +74,8 @@ export default function CrosswordGrid({
         nextCol = col + 1;
         // Check if we're still in the same clue
         if (
-          nextCol >= size || 
-          puzzle.grid[nextRow][nextCol] === "" || 
+          nextCol >= size ||
+          puzzle.grid[nextRow][nextCol] === "" ||
           nextCol >= highlightedClue.col + highlightedClue.answer.length
         ) {
           return; // Stop at the end, black cell, or end of current clue
@@ -71,7 +85,7 @@ export default function CrosswordGrid({
         nextRow = row + 1;
         // Check if we're still in the same clue
         if (
-          nextRow >= size || 
+          nextRow >= size ||
           puzzle.grid[nextRow][nextCol] === "" ||
           nextRow >= highlightedClue.row + highlightedClue.answer.length
         ) {
@@ -83,7 +97,9 @@ export default function CrosswordGrid({
       const hasAcrossClue = selectedClues.some(
         (clue) => clue.direction === "across"
       );
-      const hasDownClue = selectedClues.some((clue) => clue.direction === "down");
+      const hasDownClue = selectedClues.some(
+        (clue) => clue.direction === "down"
+      );
 
       if (
         hasAcrossClue &&
@@ -108,10 +124,10 @@ export default function CrosswordGrid({
       handleCellSelect(nextRow, nextCol);
       // Set focus to the next input element
       setTimeout(() => {
-      const nextInput = document.querySelector(
-        `input[data-key="${nextRow}-${nextCol}"]`
-      );
-      if (nextInput) nextInput.focus();
+        const nextInput = document.querySelector(
+          `input[data-key="${nextRow}-${nextCol}"]`
+        );
+        if (nextInput) nextInput.focus();
       }, 0);
     }
   }
@@ -211,33 +227,38 @@ export default function CrosswordGrid({
                 );
               }
 
+              const isCorrectCell =
+                puzzleGrid[rIndex][cIndex].toUpperCase() === cell.toUpperCase();
+              const isWrongCell = cell !== "" && !isCorrectCell;
+
               const isSelected =
                 selectedCell.row === rIndex && selectedCell.col === cIndex;
               const isInSelectedPath = isPartOfSelectedClue(rIndex, cIndex);
               let cellClassName = isSelected
                 ? "bg-primary text-white"
+                : isCorrectCell
+                ? "bg-success text-white"
+                : isWrongCell
+                ? "bg-danger text-white"
                 : isInSelectedPath
                 ? "bg-info-subtle"
                 : "bg-light";
 
-                return (
-                  <Input
-                    key={`${rIndex}-${cIndex}`}
-                    data-key={`${rIndex}-${cIndex}`}
-                    type="text"
-                    maxLength={1}
-                    value={cell}
-                    onChange={(e) =>
-                      handleChange(rIndex, cIndex, e.target.value)
-                    }
-                    onClick={() => handleCellSelect(rIndex, cIndex)}
-                    onFocus={() => handleCellSelect(rIndex, cIndex)}
-                    style={cellStyle}
-                    className={`${cellClassName} no-cursor`}
-                    disabled={isBlackCell}
-                    autoComplete="off"
-                  />
-                );
+              return (
+                <Input
+                  key={`${rIndex}-${cIndex}`}
+                  data-key={`${rIndex}-${cIndex}`}
+                  type="text"
+                  value={cell}
+                  onChange={(e) => handleChange(rIndex, cIndex, e.target.value)}
+                  onClick={() => handleCellSelect(rIndex, cIndex)}
+                  onFocus={() => handleCellSelect(rIndex, cIndex)}
+                  style={cellStyle}
+                  className={`${cellClassName} no-cursor`}
+                  disabled={isBlackCell}
+                  autoComplete="off"
+                />
+              );
             })
           )}
         </div>
