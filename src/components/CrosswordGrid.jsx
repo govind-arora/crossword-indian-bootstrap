@@ -22,6 +22,27 @@ export default function CrosswordGrid({
     newGrid[row][col] = value.slice(-1).toUpperCase();
     setGrid(newGrid);
 
+    // Check if we need to update the highlighted clue
+    if (highlightedClue && selectedClues.length > 1) {
+      // If we have multiple clues for this cell and user is entering letters,
+      // we want to maintain direction of movement consistent with the current highlighted clue
+      const currentDirection = highlightedClue.direction;
+      
+      // Find the other clue if any
+      const otherClue = selectedClues.find(clue => clue.direction !== currentDirection);
+      
+      // If we filled all cells in the current direction's clue, switch to the other clue if available
+      if (otherClue) {
+        const filledCells = currentDirection === "across" 
+          ? grid[row].slice(highlightedClue.col, highlightedClue.col + highlightedClue.answer.length).filter(cell => cell !== "").length
+          : grid.map(r => r[col]).slice(highlightedClue.row, highlightedClue.row + highlightedClue.answer.length).filter(cell => cell !== "").length;
+        
+        if (filledCells >= highlightedClue.answer.length - 1) {
+          setHighlightedClue(otherClue);
+        }
+      }
+    }
+
     // If a character was entered, move to the next cell
     if (value) {
       moveToNextCell(row, col);
@@ -29,35 +50,69 @@ export default function CrosswordGrid({
   }
 
   function moveToNextCell(row, col) {
-    // Try to determine direction based on selected clues
-    const hasAcrossClue = selectedClues.some(
-      (clue) => clue.direction === "across"
-    );
-    const hasDownClue = selectedClues.some((clue) => clue.direction === "down");
-
     let nextRow = row;
     let nextCol = col;
 
-    if (
-      hasAcrossClue &&
-      (!hasDownClue || selectedClues[0]?.direction === "across")
-    ) {
-      // Move right
-      nextCol = col + 1;
-      if (nextCol >= size || puzzle.grid[nextRow][nextCol] === "") {
-        return; // Stop at the end or black cell
+    // Check if we have a highlighted clue to determine direction
+    if (highlightedClue) {
+      if (highlightedClue.direction === "across") {
+        // Move right
+        nextCol = col + 1;
+        // Check if we're still in the same clue
+        if (
+          nextCol >= size || 
+          puzzle.grid[nextRow][nextCol] === "" || 
+          nextCol >= highlightedClue.col + highlightedClue.answer.length
+        ) {
+          return; // Stop at the end, black cell, or end of current clue
+        }
+      } else if (highlightedClue.direction === "down") {
+        // Move down
+        nextRow = row + 1;
+        // Check if we're still in the same clue
+        if (
+          nextRow >= size || 
+          puzzle.grid[nextRow][nextCol] === "" ||
+          nextRow >= highlightedClue.row + highlightedClue.answer.length
+        ) {
+          return; // Stop at the end, black cell, or end of current clue
+        }
       }
-    } else if (hasDownClue) {
-      // Move down
-      nextRow = row + 1;
-      if (nextRow >= size || puzzle.grid[nextRow][nextCol] === "") {
-        return; // Stop at the end or black cell
+    } else {
+      // Fallback to previous behavior if no highlighted clue
+      const hasAcrossClue = selectedClues.some(
+        (clue) => clue.direction === "across"
+      );
+      const hasDownClue = selectedClues.some((clue) => clue.direction === "down");
+
+      if (
+        hasAcrossClue &&
+        (!hasDownClue || selectedClues[0]?.direction === "across")
+      ) {
+        // Move right
+        nextCol = col + 1;
+        if (nextCol >= size || puzzle.grid[nextRow][nextCol] === "") {
+          return; // Stop at the end or black cell
+        }
+      } else if (hasDownClue) {
+        // Move down
+        nextRow = row + 1;
+        if (nextRow >= size || puzzle.grid[nextRow][nextCol] === "") {
+          return; // Stop at the end or black cell
+        }
       }
     }
 
     // Select the next cell if it's valid
     if (nextRow !== row || nextCol !== col) {
       handleCellSelect(nextRow, nextCol);
+      // Set focus to the next input element
+      setTimeout(() => {
+      const nextInput = document.querySelector(
+        `input[data-key="${nextRow}-${nextCol}"]`
+      );
+      if (nextInput) nextInput.focus();
+      }, 0);
     }
   }
 
@@ -94,6 +149,7 @@ export default function CrosswordGrid({
     });
 
     setSelectedClues(clues);
+    setHighlightedClue(clues.length ? clues[0] : null);
   }
 
   const gridStyle = {
@@ -109,6 +165,7 @@ export default function CrosswordGrid({
     textTransform: "uppercase",
     fontSize: "1.25rem",
     fontWeight: "600",
+    caretColor: "transparent",
   };
 
   const isPartOfSelectedClue = (row, col) => {
@@ -116,28 +173,12 @@ export default function CrosswordGrid({
 
     return selectedClues.some((clue) => {
       if (clue.direction === "across") {
-        // console.log(
-        //   clue.answer + ' ' +
-        //     `${
-        //       row === clue.row &&
-        //       col >= clue.col &&
-        //       col < clue.col + clue.answer.length
-        //     }`
-        // );
         return (
           row === clue.row &&
           col >= clue.col &&
           col < clue.col + clue.answer.length
         );
       } else if (clue.direction === "down") {
-        // console.log(
-        //   clue.answer + ' ' +
-        //     `${
-        //       col === clue.col &&
-        //       row >= clue.row &&
-        //       row < clue.row + clue.answer.length
-        //     }`
-        // );
         return (
           col === clue.col &&
           row >= clue.row &&
@@ -155,42 +196,48 @@ export default function CrosswordGrid({
           Crossword Grid ({size})
         </CardTitle>
         <div style={gridStyle}>
-          {grid.map((row, rowIndex) =>
-            row.map((cell, colIndex) => {
+          {grid.map((row, rIndex) =>
+            row.map((cell, cIndex) => {
               const puzzleGrid = puzzle.grid;
-              const isBlackCell = puzzleGrid[rowIndex][colIndex] === "";
+              const isBlackCell = puzzleGrid[rIndex][cIndex] === "";
+
+              if (isBlackCell) {
+                return (
+                  <div
+                    key={`${rIndex}-${cIndex}`}
+                    style={cellStyle}
+                    className="bg-dark text-white"
+                  />
+                );
+              }
 
               const isSelected =
-                selectedCell.row === rowIndex && selectedCell.col === colIndex;
-              const isInSelectedPath = isPartOfSelectedClue(rowIndex, colIndex);
-              let cellClassName = isBlackCell
-                ? "bg-dark text-white"
-                : isSelected
+                selectedCell.row === rIndex && selectedCell.col === cIndex;
+              const isInSelectedPath = isPartOfSelectedClue(rIndex, cIndex);
+              let cellClassName = isSelected
                 ? "bg-primary text-white"
                 : isInSelectedPath
                 ? "bg-info-subtle"
                 : "bg-light";
 
-              return (
-                <Input
-                  key={`${rowIndex}-${colIndex}`}
-                  type="text"
-                  maxLength={1}
-                  value={cell}
-                  onChange={(e) =>
-                    handleChange(rowIndex, colIndex, e.target.value)
-                  }
-                  onClick={() =>
-                    !isBlackCell && handleCellSelect(rowIndex, colIndex)
-                  }
-                  onFocus={() =>
-                    !isBlackCell && handleCellSelect(rowIndex, colIndex)
-                  }
-                  style={cellStyle}
-                  className={cellClassName}
-                  disabled={isBlackCell}
-                />
-              );
+                return (
+                  <Input
+                    key={`${rIndex}-${cIndex}`}
+                    data-key={`${rIndex}-${cIndex}`}
+                    type="text"
+                    maxLength={1}
+                    value={cell}
+                    onChange={(e) =>
+                      handleChange(rIndex, cIndex, e.target.value)
+                    }
+                    onClick={() => handleCellSelect(rIndex, cIndex)}
+                    onFocus={() => handleCellSelect(rIndex, cIndex)}
+                    style={cellStyle}
+                    className={`${cellClassName} no-cursor`}
+                    disabled={isBlackCell}
+                    autoComplete="off"
+                  />
+                );
             })
           )}
         </div>
