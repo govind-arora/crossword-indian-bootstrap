@@ -4,7 +4,7 @@ import CluesList from "./CluesList";
 
 export default function Crossword({ puzzle, size }) {
   const [selectedClues, setSelectedClues] = useState([]); 
-  const [selectedClue, setSelectedClue] = useState(null);
+  // const [selectedClue, setSelectedClue] = useState(null);
   // const [direction, setDirection] = useState(''); // Across or Down
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
 
@@ -25,11 +25,13 @@ export default function Crossword({ puzzle, size }) {
         />
       </div>
 
-      <div className="my-3 d-flex justify-content-center">
-        <div className="bg-light rounded shadow-sm w-50">
-          <CluesList clues={puzzle.clues} selectedClues={selectedClues} />
+      {selectedCell.row !== null && (
+        <div className="my-3 d-flex justify-content-center">
+          <div className="bg-light rounded shadow-sm w-50">
+            <CluesList clues={puzzle.clues} selectedClues={selectedClues} />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
