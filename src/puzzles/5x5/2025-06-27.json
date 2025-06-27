@@ -1,38 +1,60 @@
 {
-  "date": "2025-06-22",
+  "date": "2025-06-24",
   "size": "5x5",
   "theme": "Indian Festivals",
   "grid": [
-    ["D", "I", "W", "A", "L"],
-    ["", "", "", "", "I"],
-    ["H", "O", "L", "I", ""],
-    ["", "", "", "", ""],
-    ["R", "A", "M", "A", "D"]
+    ["B", "E", "A", "R", "S"],
+    ["L", "", "R", "", "U"],
+    ["U", "S", "E", "", "N"],
+    ["E", "", "A", "", ""],
+    ["S", "T", "A", "R", "T"]
   ],
   "clues": {
     "across": [
       {
         "number": 1,
-        "clue": "Festival of lights",
-        "answer": "DIWAL",
+        "clue": "Large furry animals",
+        "answer": "BEARS",
         "row": 0,
         "col": 0
       },
       {
-        "number": 3,
-        "clue": "Festival of colors",
-        "answer": "HOLI",
+        "number": 2,
+        "clue": "Employ or utilize",
+        "answer": "USE",
         "row": 2,
         "col": 0
       },
       {
-        "number": 5,
-        "clue": "Islamic month of fasting",
-        "answer": "RAMAD",
+        "number": 3,
+        "clue": "Begin or commence",
+        "answer": "START",
         "row": 4,
         "col": 0
       }
     ],
-    "down": []
+    "down": [
+      {
+        "number": 1,
+        "clue": "Sad or melancholy",
+        "answer": "BLUE",
+        "row": 0,
+        "col": 0
+      },
+      {
+        "number": 4,
+        "clue": "Every surface has this",
+        "answer": "AREA",
+        "row": 0,
+        "col": 2
+      },
+      {
+        "number": 5,
+        "clue": " Bright star in our solar system",
+        "answer": "SUN",
+        "row": 0,
+        "col": 4
+      }
+    ]
   }
 }

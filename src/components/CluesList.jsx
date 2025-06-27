@@ -10,7 +10,7 @@ export default function CluesList({ clues, selectedClues }) {
           <ul className="ps-0 mb-0">
             {acrossClues.map((clue) => (
               <li key={`across-${clue.number}`} className="mb-2 list-unstyled">
-                {clue.clue}
+                {clue.clue} ({clue.answer.length})
               </li>
             ))}
           </ul>
@@ -23,7 +23,7 @@ export default function CluesList({ clues, selectedClues }) {
           <ul className="ps-0 mb-0">
             {downClues.map((clue) => (
               <li key={`down-${clue.number}`} className="mb-2 list-unstyled">
-                {clue.clue}
+                {clue.clue} {clue.answer.length}
               </li>
             ))}
           </ul>
