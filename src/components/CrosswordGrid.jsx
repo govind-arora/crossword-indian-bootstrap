@@ -1,21 +1,24 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { Card, CardBody, CardTitle, Input } from "reactstrap";
+import { usePuzzle } from "../context/PuzzleContext";
 
-export default function CrosswordGrid({
-  size,
-  puzzle,
-  selectedCell,
-  setSelectedCell,
-  selectedClues,
-  setSelectedClues,
-}) {
-  const [grid, setGrid] = useState(generateEmptyGrid(size));
-  const [highlightedClue, setHighlightedClue] = useState(null);
+export default function CrosswordGrid() {
+  const {
+    size: sizeString,
+    puzzle,
+    selectedCell,
+    setSelectedCell,
+    selectedClues,
+    setSelectedClues,
+    grid,
+    setGrid,
+    highlightedClue,
+    setHighlightedClue
+  } = usePuzzle();
+  
+  const size = parseInt(sizeString?.split('x')[0]) || 0;
 
-  useEffect(() => {
-    setGrid(generateEmptyGrid(size));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size]);
+  // Grid is now managed by context
 
   // Move to the previous cell when backspacing
   function moveToPreviousCell(row, col) {
@@ -614,8 +617,4 @@ export default function CrosswordGrid({
   );
 }
 
-// Utility to generate an empty grid of given size
-function generateEmptyGrid(size) {
-  const n = parseInt(size);
-  return Array.from({ length: n }, () => Array(n).fill(""));
-}
+// Utility moved to context
