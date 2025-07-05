@@ -19,7 +19,6 @@ export function PuzzleProvider({ children }) {
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [showHints, setShowHints] = useState(false);
   const [hintsUsed, setHintsUsed] = useState(0);
 
   // Timer functionality
@@ -36,7 +35,7 @@ export function PuzzleProvider({ children }) {
   // Load puzzle when size changes
   useEffect(() => {
     if (!size) return;
-    
+
     const loadPuzzleData = async () => {
       setLoading(true);
       setError(null);
@@ -44,7 +43,7 @@ export function PuzzleProvider({ children }) {
         const today = new Date().toISOString().slice(0, 10);
         const puzzleData = await loadPuzzle(size, today);
         setPuzzle(puzzleData);
-        setGrid(generateEmptyGrid(parseInt(size.split('x')[0])));
+        setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
         // Start timer when puzzle is loaded
         setStartTime(Date.now());
       } catch (err) {
@@ -54,7 +53,7 @@ export function PuzzleProvider({ children }) {
         setLoading(false);
       }
     };
-    
+
     loadPuzzleData();
   }, [size]);
 
@@ -67,29 +66,33 @@ export function PuzzleProvider({ children }) {
         // Skip black cells
         if (puzzle.grid[rowIndex][colIndex] === "") return true;
         // Check if cell is filled correctly
-        return cell.toUpperCase() === puzzle.grid[rowIndex][colIndex].toUpperCase();
+        return (
+          cell.toUpperCase() === puzzle.grid[rowIndex][colIndex].toUpperCase()
+        );
       })
     );
 
     if (isPuzzleComplete && !isComplete) {
       setIsComplete(true);
-      
+
       // Save stats when puzzle is complete
       const saveCompletionStats = () => {
-        const stats = JSON.parse(localStorage.getItem('crosswordStats') || '{}');
+        const stats = JSON.parse(
+          localStorage.getItem("crosswordStats") || "{}"
+        );
         const puzzleKey = `${puzzle.date}-${size}`;
-        
+
         stats[puzzleKey] = {
           date: puzzle.date,
           size,
           timeSeconds: elapsedTime,
           hintsUsed,
-          completedAt: new Date().toISOString()
+          completedAt: new Date().toISOString(),
         };
-        
-        localStorage.setItem('crosswordStats', JSON.stringify(stats));
+
+        localStorage.setItem("crosswordStats", JSON.stringify(stats));
       };
-      
+
       saveCompletionStats();
     }
   }, [grid, puzzle, isComplete, size, elapsedTime, hintsUsed]);
@@ -100,7 +103,7 @@ export function PuzzleProvider({ children }) {
 
   function resetPuzzle() {
     if (!size) return;
-    setGrid(generateEmptyGrid(parseInt(size.split('x')[0])));
+    setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
     setSelectedCell({ row: null, col: null });
     setSelectedClues([]);
     setHighlightedClue(null);
@@ -108,18 +111,6 @@ export function PuzzleProvider({ children }) {
     setElapsedTime(0);
     setIsComplete(false);
     setHintsUsed(0);
-  }
-
-  function getHint() {
-    if (!puzzle || !selectedCell.row !== null) return;
-    
-    const { row, col } = selectedCell;
-    if (puzzle.grid[row][col] === "") return; // Don't give hints for black cells
-    
-    const newGrid = [...grid];
-    newGrid[row][col] = puzzle.grid[row][col];
-    setGrid(newGrid);
-    setHintsUsed(prev => prev + 1);
   }
 
   // Function moved inside useEffect
@@ -140,16 +131,10 @@ export function PuzzleProvider({ children }) {
     setGrid,
     elapsedTime,
     isComplete,
-    showHints,
-    setShowHints,
-    hintsUsed,
     resetPuzzle,
-    getHint,
   };
 
   return (
-    <PuzzleContext.Provider value={value}>
-      {children}
-    </PuzzleContext.Provider>
+    <PuzzleContext.Provider value={value}>{children}</PuzzleContext.Provider>
   );
 }
