@@ -19,7 +19,6 @@ export function PuzzleProvider({ children }) {
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const [hintsUsed, setHintsUsed] = useState(0);
 
   // Timer functionality
   useEffect(() => {
@@ -86,7 +85,6 @@ export function PuzzleProvider({ children }) {
           date: puzzle.date,
           size,
           timeSeconds: elapsedTime,
-          hintsUsed,
           completedAt: new Date().toISOString(),
         };
 
@@ -95,7 +93,7 @@ export function PuzzleProvider({ children }) {
 
       saveCompletionStats();
     }
-  }, [grid, puzzle, isComplete, size, elapsedTime, hintsUsed]);
+  }, [grid, puzzle, isComplete, size, elapsedTime]);
 
   function generateEmptyGrid(size) {
     return Array.from({ length: size }, () => Array(size).fill(""));
@@ -110,7 +108,6 @@ export function PuzzleProvider({ children }) {
     setStartTime(Date.now());
     setElapsedTime(0);
     setIsComplete(false);
-    setHintsUsed(0);
   }
 
   // Function moved inside useEffect
