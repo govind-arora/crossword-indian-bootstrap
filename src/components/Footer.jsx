@@ -1,7 +1,7 @@
 import React from "react";
 import { Container } from "reactstrap";
 
-const Footer = ({ onNavigate }) => {
+const Footer = ({ handleModalOpen }) => {
   return (
     <footer className="bg-light py-3 mt-auto">
       <Container>
@@ -15,14 +15,14 @@ const Footer = ({ onNavigate }) => {
             <a
               href="#keyboard-shortcuts"
               className="text-decoration-none me-3"
-              onClick={onNavigate}
+              onClick={() => handleModalOpen("keyboardShortcuts")}
             >
               Keyboard Shortcuts
             </a>
             <a
               href="#puzzle-stats"
               className="text-decoration-none"
-              onClick={onNavigate}
+              onClick={() => handleModalOpen("stats")}
             >
               Stats
             </a>

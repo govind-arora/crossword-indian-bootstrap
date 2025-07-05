@@ -11,7 +11,7 @@ import {
   Badge,
 } from "reactstrap";
 
-export default function StatsView({ isOpen, toggle }) {
+export default function StatsViewModal({ isOpen, toggle }) {
   const [stats, setStats] = useState({});
 
   useEffect(() => {
