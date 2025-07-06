@@ -9,6 +9,7 @@ import {
   Col,
 } from "reactstrap";
 import { usePuzzle } from "../context/PuzzleContext";
+import { formatTime } from "../helpers/Utils";
 
 export default function SizeSelector() {
   const { size, setSize } = usePuzzle();
@@ -35,14 +36,6 @@ export default function SizeSelector() {
             )
           : 0,
     };
-  };
-
-  // Format time in minutes and seconds
-  const formatTime = (seconds) => {
-    if (!seconds) return "N/A";
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
   };
 
   return (

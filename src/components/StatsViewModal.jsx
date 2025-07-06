@@ -10,6 +10,7 @@ import {
   Col,
   Badge,
 } from "reactstrap";
+import { formatTime } from "../helpers/Utils";
 
 export default function StatsViewModal({ isOpen, toggle }) {
   const [stats, setStats] = useState({});
@@ -28,13 +29,6 @@ export default function StatsViewModal({ isOpen, toggle }) {
       month: "short",
       day: "numeric",
     });
-  };
-
-  const formatTime = (seconds) => {
-    if (!seconds) return "N/A";
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
   };
 
   // Group puzzles by size

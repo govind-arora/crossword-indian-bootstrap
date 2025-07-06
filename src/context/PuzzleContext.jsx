@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { loadPuzzle } from "../utils/loadPuzzle";
+import { loadPuzzle } from "../helpers/Utils";
 
 const PuzzleContext = createContext();
 

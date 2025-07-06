@@ -12,6 +12,7 @@ import {
   ModalFooter 
 } from "reactstrap";
 
+import { formatTime } from "../helpers/Utils";
 import { usePuzzle } from "../context/PuzzleContext";
 
 import Grid from "./Grid";
@@ -28,13 +29,6 @@ export default function Puzzle() {
   } = usePuzzle();
   
   const [isModalOpen, setIsModalOpen] = React.useState(false);
-  
-  // Format the time for display
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
-  };
   
   // Toggle completion modal
   React.useEffect(() => {
