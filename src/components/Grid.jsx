@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardBody, CardTitle, Input } from "reactstrap";
 import { usePuzzle } from "../context/PuzzleContext";
 
-export default function CrosswordGrid() {
+export default function Grid() {
   const {
     size: sizeString,
     puzzle,

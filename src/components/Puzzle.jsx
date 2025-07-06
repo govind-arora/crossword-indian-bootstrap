@@ -11,8 +11,10 @@ import {
   ModalBody, 
   ModalFooter 
 } from "reactstrap";
+
 import { usePuzzle } from "../context/PuzzleContext";
-import CrosswordGrid from "./CrosswordGrid";
+
+import Grid from "./Grid";
 import CluesList from "./CluesList";
 
 export default function Puzzle() {
@@ -74,7 +76,7 @@ export default function Puzzle() {
       {/* Main Game Area */}
       <Row>
         <Col lg={7} className="mb-4 mb-lg-0">
-          <CrosswordGrid />
+          <Grid />
         </Col>
 
         <Col lg={5}>

@@ -18,11 +18,10 @@ export default function SizeSelector() {
     { value: "9x9", difficulty: "Hard", description: "For crossword experts" },
   ];
 
-  // Get stats from local storage
-  const stats = JSON.parse(localStorage.getItem("crosswordStats") || "{}");
-
   // Calculate stats for each size
   const calculateStats = (sizeValue) => {
+    const stats = JSON.parse(localStorage.getItem("crosswordStats") || "{}");
+
     const puzzlesForSize = Object.values(stats).filter(
       (puzzle) => puzzle.size === sizeValue
     );
