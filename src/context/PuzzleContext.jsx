@@ -21,15 +21,19 @@ export function PuzzleProvider({ children }) {
   const [highlightedClue, setHighlightedClue] = useState(null);
   const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
 
+  const generateEmptyGrid = (size) => {
+    return Array.from({ length: size }, () => Array(size).fill(""));
+  };
+
   // Load Puzzle function
-  const handleLoadPuzzle = async () => {
+  const handleLoadPuzzle = async (newSize) => {
     setLoading(true);
     setError(null);
     try {
       const today = new Date().toISOString().slice(0, 10);
-      const puzzleData = await loadPuzzle(size, today);
+      const puzzleData = await loadPuzzle(newSize, today);
       setPuzzle(puzzleData);
-      setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
+      setGrid(generateEmptyGrid(parseInt(newSize.split("x")[0])));
       // Start timer when puzzle is loaded
       setStartTime(Date.now());
     } catch (err) {
@@ -66,13 +70,11 @@ export function PuzzleProvider({ children }) {
     return () => clearInterval(interval);
   }, [startTime, isComplete]);
 
-  // Load puzzle when size changes
-  useEffect(() => {
-    if (!size) return;
-
-    handleLoadPuzzle();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [size]);
+  // Handle SetSize
+  const handleSetSize = (newSize) => {
+    setSize(newSize);
+    handleLoadPuzzle(newSize);
+  };
 
   // Check if puzzle is complete
   useEffect(() => {
@@ -96,26 +98,10 @@ export function PuzzleProvider({ children }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grid, puzzle, isComplete, size, elapsedTime]);
 
-  function generateEmptyGrid(size) {
-    return Array.from({ length: size }, () => Array(size).fill(""));
-  }
-
-  function resetPuzzle() {
-    if (!size) return;
-    setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
-    setSelectedCell({ row: null, col: null });
-    setSelectedClues([]);
-    setHighlightedClue(null);
-    setStartTime(Date.now());
-    setElapsedTime(0);
-    setIsComplete(false);
-  }
-
   // Function moved inside useEffect
-
   const value = {
     size,
-    setSize,
+    setSize: handleSetSize,
     puzzle,
     loading,
     error,
@@ -129,7 +115,7 @@ export function PuzzleProvider({ children }) {
     setGrid,
     elapsedTime,
     isComplete,
-    resetPuzzle,
+    resetPuzzle: () => handleLoadPuzzle(size),
   };
 
   return (
