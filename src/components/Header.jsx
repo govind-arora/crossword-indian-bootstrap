@@ -4,7 +4,7 @@ import { usePuzzle } from "../context/PuzzleContext";
 import { formatTime } from "../helpers/Utils";
 
 export default function Header() {
-  const { size, setSize, resetPuzzle, elapsedTime } = usePuzzle();
+  const { size, handleSetSize, handleResetPuzzle, elapsedTime } = usePuzzle();
 
   return (
     <header>
@@ -12,7 +12,7 @@ export default function Header() {
         <NavbarBrand href="/" className="fw-bold">
           🧩 Daily Crossword
         </NavbarBrand>
-        
+
         {size && (
           <Nav className="ms-auto d-flex align-items-center" navbar>
             <NavItem className="me-3">
@@ -21,21 +21,21 @@ export default function Header() {
               </div>
             </NavItem>
             <NavItem className="me-2">
-              <Button 
-                color="light" 
-                size="sm" 
-                outline 
-                onClick={() => resetPuzzle()}
+              <Button
+                color="light"
+                size="sm"
+                outline
+                onClick={() => handleResetPuzzle()}
               >
                 Reset
               </Button>
             </NavItem>
             <NavItem>
-              <Button 
-                color="danger" 
-                size="sm" 
-                outline 
-                onClick={() => setSize("")}
+              <Button
+                color="danger"
+                size="sm"
+                outline
+                onClick={() => handleSetSize("")}
               >
                 Exit
               </Button>

@@ -76,11 +76,10 @@ export function PuzzleProvider({ children }) {
     handleLoadPuzzle(newSize);
   };
 
-  // Check if puzzle is complete
-  useEffect(() => {
-    if (!puzzle || !grid.length) return;
+  const handleChangeGrid = (newGrid) => {
+    setGrid(newGrid);
 
-    const isPuzzleComplete = grid.every((row, rowIndex) =>
+    const isPuzzleComplete = newGrid.every((row, rowIndex) =>
       row.every((cell, colIndex) => {
         // Skip black cells
         if (puzzle.grid[rowIndex][colIndex] === "") return true;
@@ -95,13 +94,12 @@ export function PuzzleProvider({ children }) {
       setIsComplete(true);
       handleSaveResult();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [grid, puzzle, isComplete, size, elapsedTime]);
+  }
 
   // Function moved inside useEffect
   const value = {
     size,
-    setSize: handleSetSize,
+    handleSetSize,
     puzzle,
     loading,
     error,
@@ -112,10 +110,10 @@ export function PuzzleProvider({ children }) {
     highlightedClue,
     setHighlightedClue,
     grid,
-    setGrid,
+    handleChangeGrid,
     elapsedTime,
     isComplete,
-    resetPuzzle: () => handleLoadPuzzle(size),
+    handleResetPuzzle: () => handleLoadPuzzle(size),
   };
 
   return (

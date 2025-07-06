@@ -12,7 +12,7 @@ import { usePuzzle } from "../context/PuzzleContext";
 import { formatTime } from "../helpers/Utils";
 
 export default function SizeSelector() {
-  const { size, setSize } = usePuzzle();
+  const { size, handleSetSize } = usePuzzle();
   const sizes = [
     { value: "5x5", difficulty: "Easy", description: "Perfect for beginners" },
     { value: "7x7", difficulty: "Medium", description: "For casual solvers" },
@@ -56,7 +56,7 @@ export default function SizeSelector() {
                   size === s.value ? "border-primary" : ""
                 }`}
                 style={{ cursor: "pointer" }}
-                onClick={() => setSize(s.value)}
+                onClick={() => handleSetSize(s.value)}
               >
                 <CardHeader
                   className={`text-center ${

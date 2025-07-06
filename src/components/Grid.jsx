@@ -11,7 +11,7 @@ export default function Grid() {
     selectedClues,
     setSelectedClues,
     grid,
-    setGrid,
+    handleChangeGrid,
     highlightedClue,
     setHighlightedClue
   } = usePuzzle();
@@ -102,7 +102,7 @@ export default function Grid() {
     
     const newGrid = [...grid];
     newGrid[row][col] = newValue;
-    setGrid(newGrid);
+    handleChangeGrid(newGrid);
 
     // Check if we need to update the highlighted clue
     if (highlightedClue && selectedClues.length > 1) {
