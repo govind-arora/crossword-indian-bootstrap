@@ -9,16 +9,51 @@ export function usePuzzle() {
 
 export function PuzzleProvider({ children }) {
   const [size, setSize] = useState("");
-  const [puzzle, setPuzzle] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
-  const [selectedClues, setSelectedClues] = useState([]);
-  const [highlightedClue, setHighlightedClue] = useState(null);
-  const [grid, setGrid] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [startTime, setStartTime] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+
+  const [grid, setGrid] = useState([]);
+  const [puzzle, setPuzzle] = useState(null);
+  const [selectedClues, setSelectedClues] = useState([]);
+  const [highlightedClue, setHighlightedClue] = useState(null);
+  const [selectedCell, setSelectedCell] = useState({ row: null, col: null });
+
+  // Load Puzzle function
+  const handleLoadPuzzle = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const puzzleData = await loadPuzzle(size, today);
+      setPuzzle(puzzleData);
+      setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
+      // Start timer when puzzle is loaded
+      setStartTime(Date.now());
+    } catch (err) {
+      setError("Failed to load puzzle. Please try again.");
+      console.error("Error loading puzzle:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Save stats when puzzle is complete
+  const handleSaveResult = () => {
+    const stats = JSON.parse(localStorage.getItem("crosswordStats") || "{}");
+    const puzzleKey = `${puzzle.date}-${size}`;
+
+    stats[puzzleKey] = {
+      date: puzzle.date,
+      size,
+      timeSeconds: elapsedTime,
+      completedAt: new Date().toISOString(),
+    };
+
+    localStorage.setItem("crosswordStats", JSON.stringify(stats));
+  };
 
   // Timer functionality
   useEffect(() => {
@@ -35,25 +70,8 @@ export function PuzzleProvider({ children }) {
   useEffect(() => {
     if (!size) return;
 
-    const loadPuzzleData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const today = new Date().toISOString().slice(0, 10);
-        const puzzleData = await loadPuzzle(size, today);
-        setPuzzle(puzzleData);
-        setGrid(generateEmptyGrid(parseInt(size.split("x")[0])));
-        // Start timer when puzzle is loaded
-        setStartTime(Date.now());
-      } catch (err) {
-        setError("Failed to load puzzle. Please try again.");
-        console.error("Error loading puzzle:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadPuzzleData();
+    handleLoadPuzzle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [size]);
 
   // Check if puzzle is complete
@@ -73,26 +91,9 @@ export function PuzzleProvider({ children }) {
 
     if (isPuzzleComplete && !isComplete) {
       setIsComplete(true);
-
-      // Save stats when puzzle is complete
-      const saveCompletionStats = () => {
-        const stats = JSON.parse(
-          localStorage.getItem("crosswordStats") || "{}"
-        );
-        const puzzleKey = `${puzzle.date}-${size}`;
-
-        stats[puzzleKey] = {
-          date: puzzle.date,
-          size,
-          timeSeconds: elapsedTime,
-          completedAt: new Date().toISOString(),
-        };
-
-        localStorage.setItem("crosswordStats", JSON.stringify(stats));
-      };
-
-      saveCompletionStats();
+      handleSaveResult();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grid, puzzle, isComplete, size, elapsedTime]);
 
   function generateEmptyGrid(size) {
